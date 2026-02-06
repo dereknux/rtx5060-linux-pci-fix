@@ -25,7 +25,7 @@ HOW TO USE
 
 Runs checks for GPU, kernel, CPU and NVIDIA driver status:
 
-curl -s https://raw.githubusercontent.com/SEU-USUARIO/linux-rtx5060-fix/main/fix.sh | bash -s diagnose
+curl -s https://raw.githubusercontent.com/dereknux/linux-rtx5060-fix/main/rtx5060-linux-workaround.sh | bash -s diagnose
 
 ------------------------------------------------------------
 
@@ -44,7 +44,7 @@ Recommendation: Use apply-amd
 
 Apply the fix for systems using AMD CPUs:
 
-curl -s https://raw.githubusercontent.com/SEU-USUARIO/linux-rtx5060-fix/main/fix.sh | sudo bash -s apply-amd
+curl -s https://raw.githubusercontent.com/dereknux/linux-rtx5060-fix/main/rtx5060-linux-workaround.sh | sudo bash -s apply-amd
 
 ------------------------------------------------------------
 
@@ -52,7 +52,7 @@ curl -s https://raw.githubusercontent.com/SEU-USUARIO/linux-rtx5060-fix/main/fix
 
 Apply the fix for systems using Intel CPUs:
 
-curl -s https://raw.githubusercontent.com/SEU-USUARIO/linux-rtx5060-fix/main/fix.sh | sudo bash -s apply-intel
+curl -s https://raw.githubusercontent.com/dereknux/linux-rtx5060-fix/main/rtx5060-linux-workaround.sh | sudo bash -s apply-intel
 
 ------------------------------------------------------------
 
