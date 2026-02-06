@@ -2,8 +2,9 @@ Fix RTX 5060 on Linux (PCI BAR / GRUB Workaround)
 ================================================
 
 Documented workarounds for Linux systems where the NVIDIA RTX 5060
-may fail to initialize correctly on Linux kernels 6.14 or newer,
-typically due to PCI BAR allocation issues.
+fails to initialize correctly on Linux kernels 6.14 or newer.
+The issue is typically related to PCI BAR allocation and IOMMU
+behavior on affected platforms.
 
 Repository:
 https://github.com/dereknux/rtx5060-linux-pci-fix
@@ -17,7 +18,7 @@ IMPORTANT NOTES
 ---------------
 - This project is NOT affiliated with NVIDIA
 - Use only if your RTX 5060 is NOT working correctly
-- This is a documented workaround, not an official fix
+- This is a documented workaround, not a kernel patch
 - Changes affect GRUB / PCI subsystem parameters
 - An automatic GRUB backup is created before any modification
 - If your system is already working, no action is required
@@ -60,6 +61,11 @@ Optional (skip confirmation):
 
 curl -s https://raw.githubusercontent.com/dereknux/rtx5060-linux-pci-fix/main/rtx5060-linux-workaround.sh | sudo bash -s apply-amd --yes
 
+Important note for AMD systems:
+- On some AMD platforms, using only pci=realloc=off is NOT sufficient
+- Systems may boot or appear functional temporarily, but fail after GRUB normalization
+- If the NVIDIA driver fails after reboot, amd_iommu=off is REQUIRED
+
 ------------------------------------------------------------
 
 3) INTEL CPU SYSTEMS
@@ -78,12 +84,17 @@ WHAT THIS WORKAROUND DOES
 -------------------------
 
 AMD systems:
-- Adds: pci=realloc=off amd_iommu=off
+- Ensures the following GRUB parameters are set:
+  pci=realloc=off amd_iommu=off
+
 - pci=realloc=off works around a kernel 6.14+ PCI BAR allocation issue
-- amd_iommu=off avoids IOMMU-related conflicts observed on some AMD platforms
+- amd_iommu=off avoids IOMMU-related conflicts observed on some AMD systems
+- In affected setups, both parameters are required for driver stability
 
 Intel systems:
-- Adds: pci=realloc=off
+- Ensures the following GRUB parameter is set:
+  pci=realloc=off
+
 - Intel systems do not require IOMMU changes
 
 ------------------------------------------------------------
@@ -92,9 +103,9 @@ DOCUMENTED CASES
 ----------------
 See CASES.md for:
 - real-world hardware combinations
-- failure and recovery scenarios
+- confirmed failure and recovery scenarios
 - GRUB configuration examples (before/after)
-- alternative approaches
+- alternative approaches for edge cases
 - full rollback instructions
 
 ------------------------------------------------------------
